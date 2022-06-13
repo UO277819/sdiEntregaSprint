@@ -1,0 +1,24 @@
+<table class="table table-hover" th:fragment="tablePublications" id="tablePublications"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <thead>
+    <tr>
+        <th scope="col" th:text="#{publication.list.date}"></th>
+        <th scope="col" th:text="#{publication.list.title}"></th>
+        <th scope="col" th:text="#{publication.list.text}"></th>
+        <th scope="col" th:text="#{publication.list.recommend}"></th>
+        <th scope="col" th:text="#{publication.list.total}"></th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr  th:each="publication : ${publicationList}">
+        <td scope="row" th:text="${#temporals.format(publication.date,'dd/MM/YYYY')}"> 01/01/2007</td>
+        <td th:text="${publication.title}"> Título de la publicación</td>
+        <td th:text="${publication.text}">Texto de la publicación</td>
+        <td th:id="${publication.getTitle()}"> <a th:if="${!publication.canRecommend(#authentication.getName())}" th:id="${publication.getTitle()+'-recomendar'}" th:text="#{publication.list.recommend}" th:href="${'/publication/recommend/'+publication.getId()}"></a></td>
+        <td th:id="${publication.title+'-recomendaciones'}" th:text="${publication.getRecomendaciones()}">Texto de la publicación</td>
+
+    </tr>
+    </tbody>
+</table>

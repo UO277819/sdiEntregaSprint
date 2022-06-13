@@ -1,0 +1,22 @@
+<table class="table table-hover" th:fragment="tablePublications" id="tablePublications"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <thead>
+    <tr>
+        <th scope="col" th:text="#{publication.list.date}"></th>
+        <th scope="col" th:text="#{publication.list.mail}"></th>
+        <th scope="col" th:text="#{publication.list.title}"></th>
+        <th scope="col" th:text="#{publication.list.state}"></th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="publication : ${publicationList}">
+        <td scope="row" th:text="${#temporals.format(publication.date,'dd/MM/YYYY')}"> 01/01/2007</td>
+        <td th:text="${publication.getAuthor().getEmail()}">Texto de la publicación</td>
+        <td th:text="${publication.title}"> Título de la publicación</td>
+        <td th:text="${publication.state}">Texto de la publicación</td>
+
+    </tr>
+    </tbody>
+</table>

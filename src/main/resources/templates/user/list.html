@@ -1,0 +1,26 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/head"/>
+<body>
+<nav th:replace="fragments/nav"/>
+<div class="container">
+    <h2 id="user-intro" th:text="#{users.title}">Usuarios</h2>
+    <form class="form-inline" action="/user/list">
+        <div class="form-group">
+            <input name="searchText" type="text" class="form-control" size="50"
+                   th:placeholder="#{users.search.placeholder}">
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="#{users.search.button}">Buscar</button>
+    </form>
+    <p id="user-text-intro" th:text="#{users.list.message}">Los usuarios que actualmente figuran en el sistema son los siguientes:</p>
+    <button sec:authorize="hasRole('ROLE_ADMIN')">
+        <a  th:text="#{users.delete}" th:href="${'/user/delete'}">Eliminar</a>
+    </button>
+    <div class="table-responsive">
+        <table class="table table-hover" th:fragment="tableUsers" id="tableUsers" th:replace="fragments/tableUsers"/>
+    </div>
+    <footer th:replace="fragments/pagination"/>
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

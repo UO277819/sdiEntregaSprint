@@ -1,0 +1,73 @@
+<table class="table table-hover" th:fragment="tableUsers" id="tableUsers" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+       xmlns:th="http://www.thymeleaf.org">
+    <thead>
+    <tr>
+        <th scope="col">Email</th>
+        <th th:text="#{users.list.name}">Nombre</th>
+        <th th:text="#{users.list.surname}">Apellidos</th>
+        <th th:text="#{users.list.relationship}">Amigos</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr sec:authorize="hasRole('ROLE_ADMIN')" th:each="user : ${usersList}">
+        <td scope="row" th:text="${user.email}">email@email.com</td>
+        <td scope="row" th:text="${user.name}">Nombre del alumno</td>
+        <td scope="row" th:text="${user.lastName}">Apellidos del alumno</td>
+        <td th:if="${user.role != 'ROLE_ADMIN'}">
+            <div th:if="${user.selected}">
+                <input type="checkbox" name="selected" checked="checked"
+                       th:id="${'selectButton' + user.id}"> <span
+                    th:text="#{checkbox.select}"></span>
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    $("#selectButton[[${user.id}]]")
+                        .click(function() {$.get("/user/[[${user.id}]]/noselect",
+                            function(data) {var numberPage = [[${param.page}]];
+                                var urlUpdate = '/user/list/update';
+                                if ( numberPage != null ){
+                                    urlUpdate += "?page="+numberPage[0];
+                                }
+                                $("#tableUsers").load(urlUpdate);
+                            });
+                        });
+                    /*]]>*/
+                </script>
+            </div>
+            <div th:unless="${user.selected}">
+                <input type="checkbox" name="noSelected"
+                       th:id="${'noselectButton' + user.id}"> <span
+                    th:text="#{checkbox.select}"></span>
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    $("#noselectButton[[${user.id}]]")
+                        .click(function() {$.get("/user/[[${user.id}]]/select",
+                            function(data) {var numberPage = [[${param.page}]];
+                                var urlUpdate = '/user/list/update';
+                                if ( numberPage != null ){
+                                    urlUpdate += "?page="+numberPage[0];
+                                }
+                                $("#tableUsers").load(urlUpdate);
+                            });
+                        });
+                    /*]]>*/
+                </script>
+            </div>
+        </td>
+    </tr>
+    <tr id="tabla-users" sec:authorize="hasRole('ROLE_USER')" th:each="user : ${usersList}">
+
+        <td scope="row" th:text="${user.email}">email@email.com</td>
+        <td scope="row" th:text="${user.name}">Nombre del alumno</td>
+        <td scope="row" th:text="${user.lastName}">Apellidos del alumno</td>
+        <td id="element-addFriend">
+            <a id="option-addFriend" th:if="${!user.hasPetition(#authentication.getName())}" th:text="#{user.addFriend}"
+               th:href="${'/user/list/addFriend/' + user.id}"></a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>

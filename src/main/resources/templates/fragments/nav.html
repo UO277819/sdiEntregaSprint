@@ -1,0 +1,86 @@
+<!-- nav.html -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <a class="navbar-brand" href="#"></a>
+    <img src="/images/student-48.png" alt="logo"/>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar"
+            aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
+            <li class="nav-item active">
+                <a id="home" class="nav-link" href="/home" th:text="#{nav.home}">Inicio<span class="sr-only">(current)</span></a>
+            </li>
+            <li id="list users" class="nav-item active">
+                <a  class="nav-link"  th:text="#{nav.users.list}" href="/user/list">Ver usuarios
+                    <span class="sr-only">(current)</span></a>
+            </li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')" id="list publications" class="nav-item active">
+                <a  class="nav-link"  th:text="#{nav.publications}" href="/publication/all">Ver publicaciones
+                    <span class="sr-only">(current)</span></a>
+            </li>
+            <li  id="publication-menu" class="nav-item dropdown active">
+                <a sec:authorize="hasRole('ROLE_USER')" class="nav-link dropdown-toggle" href="#" id="publicationsDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" th:text="#{nav.publications}"> Publicaciones
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a sec:authorize="hasRole('ROLE_USER')" id="add-publication" class="dropdown-item"
+                       href="/publication/add" th:text="#{nav.publications.add}">
+                        Crear publicación </a>
+                    <a sec:authorize="hasRole('ROLE_USER')" id="own-publications" class="dropdown-item"
+                       href="/publication/list" th:text="#{nav.publications.own}">
+                        Mis Publicaciones </a>
+                </div>
+            </li>
+            <li sec:authorize="hasRole('ROLE_USER')" id="friends-menu" class="nav-item active">
+                <a  id="my-friends" class="nav-link" href="/friends/list" th:text="#{friends.menu}">
+                    <span class="sr-only"></span></a>
+            </li>
+            <li sec:authorize="hasRole('ROLE_USER')" id="invitations" class="nav-item active">
+                <a id="invitations-menu" class="nav-link" href="/relationship/list" th:text="#{nav.invitations}"> Invitaciones
+                    <span class="sr-only"></span></a>
+            </li>
+            <li id="list logs" class="nav-item active">
+                <a  class="nav-link"  th:text="#{log.list}" href="/log/list">Ver logs
+                    <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav justify-content-end">
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="btnLanguage" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <span th:text="#{language.change}"></span>
+                </a>
+                <div id="languageDropdownMenuButton" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" id="btnEnglish" value="EN">
+                        <img th:src="@{/images/if_uk_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
+                        <span th:text="#{language.en}">Inglés</span>
+                    </a>
+                    <a class="dropdown-item" id="btnSpanish" value="ES">
+                        <img th:src="@{/images/if_spain_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
+                        <span th:text="#{language.es}">Español</span>
+                    </a>
+                </div>
+            </li>
+            <li sec:authorize="!isAuthenticated()" class="nav-item active">
+                <a class="nav-link" href="/signup" th:text="#{signup.message}">
+                    <i class='fas fa-user-alt' style='font-size:16px'></i>
+                    <span>Registrate</span>
+                </a>
+            </li>
+            <li sec:authorize="!isAuthenticated()" class="nav-item active">
+                <a id="login-menu" class="nav-link" href="/login" th:text="#{login.message}">
+                    <i class='fas fa-sign-in-alt' style='font-size:16px'></i>
+                    <span>Identifícate</span>
+                </a>
+            </li>
+            <li sec:authorize="isAuthenticated()" class="nav-item active">
+                <a class="nav-link" href="/logout">
+                    <i class='fas fa-sign-out-alt' style='font-size:16px'></i>
+                    <span th:text="#{logout.message}">Desconectar</spanth:text></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

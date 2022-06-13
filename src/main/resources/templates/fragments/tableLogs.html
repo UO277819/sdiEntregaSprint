@@ -1,0 +1,34 @@
+<table class="table table-hover" id="tableLogs" th:fragment="tableLogs" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+       xmlns:th="http://www.thymeleaf.org">
+    <thead>
+    <tr>
+        <th scope="col" th:text="#{log.type}">Tipo</th>
+        <th th:text="#{log.time}">Fecha</th>
+        <th th:text="#{log.description}">Descripción</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <div th:if="${!filtered}">
+        <tr sec:authorize="hasRole('ROLE_ADMIN')" th:each="log : ${logsList}">
+            <td scope="row"><a th:href="${'list/' + log.type}" th:text="${log.type}"></a></td>
+            <td scope="row" th:text="${log.time}"></td>
+            <td scope="row" th:text="${log.description}"></td>
+        </tr>
+    </div>
+    <div th:if="${filtered}">
+        <tr sec:authorize="hasRole('ROLE_ADMIN')" th:each="log : ${logsList}">
+            <td scope="row" th:text="${log.type}"></td>
+            <td scope="row" th:text="${log.time}"></td>
+            <td scope="row" th:text="${log.description}"></td>
+        </tr>
+        <button>
+            <a th:href="${'/log/list'}" th:text="#{log.return}">Volver</a>
+        </button>
+    </div>
+    </tbody>
+</table>

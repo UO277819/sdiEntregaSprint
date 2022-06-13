@@ -1,0 +1,18 @@
+<table class="table table-hover" th:fragment="invitations" id="invitations"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <thead>
+    <tr>
+        <th scope="col" th:text="#{users.list.name}"></th>
+        <th scope="col" th:text="#{users.list.surname}"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="relation : ${relationList}" id="table-friends">
+        <td scope="row" th:text="${relation.source.name}"> </td>
+        <td th:text="${relation.source.lastName}"> </td>
+        <td><a id="option-accept" th:href="${'/relationship/accept/' + relation.id}" th:text="#{relationship.list.accept}"></a></td>
+
+    </tr>
+    </tbody>
+</table>

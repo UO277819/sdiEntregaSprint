@@ -1,0 +1,28 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<nav th:replace="fragments/nav"/>
+<div class="container">
+    <h2>Logs</h2>
+    <div class="alert alert-danger" role="alert" sec:authorize="hasRole('ROLE_USER')" th:text="#{log.alert}">Listado de
+        logs sólo está disponible para los administradores
+    </div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <p th:text="#{log.info}">Haz click en el tipo de log para filtrar por tipo</p>
+        <form action="/log/list" class="form-inline">
+            <button>
+                <a th:href="${'/log/delete'}" th:text="#{log.delete}">Eliminar logs</a>
+            </button>
+            <div class="table-responsive">
+                <table class="table table-hover" th:fragment="tableLogs" id="tableLogs" th:replace="fragments/tableLogs"/>
+            </div>
+            <footer th:replace="fragments/pagination"/>
+        </form>
+    </div>
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>
