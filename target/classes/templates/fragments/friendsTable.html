@@ -1,0 +1,24 @@
+<table class="table table-hover" th:fragment="tableFriends" id="tableFriends"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <thead>
+    <tr>
+        <th scope="col" th:text="#{friends.list.name}"></th>
+        <th scope="col" th:text="#{friends.list.surname}"></th>
+        <th scope="col" th:text="#{friends.list.mail}"></th>
+    </tr>
+    </thead>
+    <tbody>
+   <!-- <tr th:each="user : ${friendsList}">
+        <td scope="row"><a th:id="${user.name +'-'+ user.email}" th:text="${user.name}" th:href="${'/publication/list/' + user.email}"></a></td>
+        <td th:text="${user.lastName}"> Apellido </td>
+        <td    th:text="${user.lastName}"> Apellido </td>
+        <td th:text="${user.email}"> Email</td>
+    </tr>-->
+   <tr th:each="relation : ${friendsList}">
+       <td scope="row"><a th:id="${relation.getName(#authentication.getName()) +'-'+ relation.getEmail(#authentication.getName())}" th:text="${relation.getName(#authentication.getName())}" th:href="${'/publication/list/' + relation.getEmail(#authentication.getName())}"></a></td>
+         <td th:text="${relation.getLastName(#authentication.getName())}"> Apellido </td>
+      <td th:text="${relation.getEmail(#authentication.getName())}"> Email</td>
+   </tr>
+    </tbody>
+</table>

@@ -1,0 +1,15 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/head"/>
+<body>
+<nav th:replace="fragments/nav"/>
+<div class="container" style="text-align: center">
+    <h2 th:text="#{welcome.message}"></h2>
+    <h3 th:text="#{home.message}">Este es un perfil privado</h3>
+    <p th:text="#{home.name}">Usuario Autenticado como:</p>
+    <p><b th:inline="text" sec:authentication="principal.username"></b></p>
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

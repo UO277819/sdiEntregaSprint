@@ -1,0 +1,38 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/head"></head>
+<body>
+<nav th:replace="fragments/nav"></nav>
+<div class="container" id="main-container">
+    <h2 th:text="#{invitation.list}">Peticiones de amistad</h2>
+    <form class="form-inline" action="/relationship/list">
+        <div class="form-group">
+            <input name="searchText" type="text" class="form-control" size="50"
+                   th:placeholder="#{invitation.search.placeholder}">
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="#{invitation.search.button}"></button>
+    </form>
+    <p th:text="#{invitation.introduction}">Las peticiones de amistad que actualmente figuran en el sistema son las siguientes:</p>
+    <button type="button" id="updateButton" class="btn btn-primary" th:text="#{invitation.update.button}"></button>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        $( "#updateButton" ).click(function() {
+            var numberPage = [[${param.page}]];
+            var urlUpdate = '/relationship/list/update';
+            if (numberPage != null ) {
+                urlUpdate += "?page="+numberPage[0];
+            }
+            $("#tableRelation").load(urlUpdate);
+        });
+        /*]]>*/
+    </script>
+    <div class="table-responsive">
+        <table class="table table-hover" th:fragment="tableRelation" id="tableRelation" th:replace="fragments/invitations"/>
+    </div>
+    <div th:if="${#lists.isEmpty(relationList)}" th:text="#{invitation.noinvitations}"> No hay invitaciones </div>
+    <footer th:replace="fragments/pagination"/>
+</div>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>
